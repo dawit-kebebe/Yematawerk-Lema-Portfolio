@@ -5,6 +5,19 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (doc?.cloudinary?.secure_url) {
+          return {
+            ...doc,
+            url: doc.cloudinary.secure_url, // Overwrites the broken generated URL
+          };
+        }
+        return doc;
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',

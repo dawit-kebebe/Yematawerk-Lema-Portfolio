@@ -1,4 +1,4 @@
-import React from 'react'
+import Masonry, { ResponsiveMasonry } from 'react-masonify'
 
 const MasonryGallery = () => {
     return (
@@ -10,9 +10,10 @@ const MasonryGallery = () => {
                     */}
                 <Masonry gap="1rem">
                     {
-                        filteredGallery.map((image, index: number) => (
-                            <GalleryItemRenderer key={index} item={image} index={index} />
-                        ))
+                        // filteredGallery.map((image, index: number) => (
+                        //     <GalleryItemRenderer key={index} item={image} index={index} />
+                        // ))
+                        <></>
                     }
                 </Masonry>
             </ResponsiveMasonry>

@@ -1,8 +1,7 @@
 "use client";
 
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react'
-import { Tooltip } from 'flowbite-react';
 
 interface MapProps {
     pinPoint: number;

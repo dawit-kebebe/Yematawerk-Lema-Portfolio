@@ -1,9 +1,19 @@
-import { Block } from "payload";
+import type { Block } from "payload";
 
 export const AboutBlock: Block = {
     slug: 'about',
     interfaceName: 'AboutTimeline',
     fields: [
+        {
+            name: 'blockSlug', // Field name
+            type: 'text',
+            admin: {
+                readOnly: true,
+                condition: () => true, // Ensures it's always visible
+                description: 'The internal identifier for this block type.',
+            },
+            defaultValue: '#about', // Manually set to match the block slug
+        },
         {
             name: 'section_title',
             label: 'Section Title',
@@ -43,7 +53,7 @@ export const AboutBlock: Block = {
                 { name: 'label', type: 'text', required: true },
                 { name: 'url', type: 'text', required: true }
             ],
-            required: false
+            required: true
         },
     ]
 }

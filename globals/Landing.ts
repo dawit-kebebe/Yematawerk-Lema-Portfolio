@@ -1,9 +1,9 @@
-import { AboutBlock } from '@/blocks/AboutBlock';
-import { CompaniesBlock } from '@/blocks/CompaniesBlock';
-import { HeroBlock } from '@/blocks/HeroBlock';
-import { ImagePortfolioBlock } from '@/blocks/ImagePortfolioBlock';
-import { TestimonialsBlock } from '@/blocks/TestimonialsBlock';
-import { YamiTourBlock } from '@/blocks/YamiTour';
+import { AboutBlock } from '../blocks/AboutBlock.ts';
+import { CompaniesBlock } from '../blocks/CompaniesBlock.ts';
+import { HeroBlock } from '../blocks/HeroBlock.ts';
+import { ImagePortfolioBlock } from '../blocks/ImagePortfolioBlock.ts';
+import { TestimonialsBlock } from '../blocks/TestimonialsBlock.ts';
+import { YamiTourBlock } from '../blocks/YamiTour.ts';
 import type { GlobalConfig } from 'payload';
 
 export const Landing: GlobalConfig = {

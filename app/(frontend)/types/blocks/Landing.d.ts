@@ -1,5 +1,6 @@
 export type LandingType = {
     blockType: string,
+    blockSlug: string,
     title: string,
     description: string,
     cta_button_1: {

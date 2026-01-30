@@ -3,22 +3,13 @@
 import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
+import { GalleryItem } from "../types/GalleryItem";
 
 interface HeaderProps {
     data: {
         globalType: string;
         title: string;
-        logo: {
-            alt: string;
-            filename: string;
-            mimeType: string;
-            filesize: number;
-            width: number;
-            height: number;
-            id: string;
-            url: string;
-            thumbnailURL: string | null;
-        };
+        logo: GalleryItem;
         navigationLinks: {
             label: string;
             url: string;
@@ -36,7 +27,7 @@ export function Header({ data }: HeaderProps) {
 
     return (
         <Navbar fluid rounded className="sticky top-0 left-0 z-100 shadow-lg">
-            <NavbarBrand href="https://flowbite-react.com">
+            <NavbarBrand href="/">
                 <Image src={data.logo?.url || '/favicon.svg'} alt={data.logo?.alt || 'Logo'} width={40} height={40} className="mr-3 h-6 sm:h-9" />
                 <span className="hidden sm:inline self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">{data.title}</span>
             </NavbarBrand>

@@ -1,23 +1,23 @@
-import type { Metadata } from "next";
-import { Poppins, Michroma } from 'next/font/google';
-import "./globals.css";
 import Header from "@/app/(frontend)/components/Header";
-import { ThemeModeScript } from "flowbite-react";
-import { getPayload } from "payload";
 import config from "@/payload.config";
+import { ThemeModeScript } from "flowbite-react";
+import type { Metadata } from "next";
+import { Geist, Michroma } from 'next/font/google';
+import { getPayload } from "payload";
+import Footer from "./components/Footer";
+import GoogleCaptchaProvider from "./components/GoogleCaptchaProvider";
+import "./globals.css";
+import { SocialsType } from "./types/collections/Socials";
 
-const poppins = Poppins({
-	subsets: ['latin'],
-	display: 'swap',
-	variable: '--font-poppins',
-	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+const geistSans = Geist({
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
 });
 
 const michroma = Michroma({
 	subsets: ['latin'],
 	display: 'swap',
 	variable: '--font-michroma',
-	// adjust weights if needed; michroma may only have limited weights
 	weight: ['400'],
 });
 
@@ -35,10 +35,20 @@ export default async function RootLayout({
 
 	const payload = await getPayload({ config });
 
-	const headerGlobal = await payload.findGlobal({ slug: 'header' } as any)
+	const headerGlobal: any = await payload.findGlobal({ slug: 'header' } as any);
+	const socialsCollection = await payload.find({ collection: 'socials' } as any);
+
+	const socials = (socialsCollection.docs as any)?.map((social: SocialsType) => {
+		return {
+			id: social.id,
+			label: social.label,
+			url: social.url,
+			icon: social.icon
+		}
+	});
 
 	return (
-		<html lang="en" suppressHydrationWarning className={`${poppins.variable} ${michroma.variable}`}>
+		<html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${michroma.variable}`}>
 			<head>
 				<ThemeModeScript />
 			</head>
@@ -47,9 +57,14 @@ export default async function RootLayout({
 					headerGlobal && <Header data={headerGlobal} />
 				}
 				<div className="max-w-450 mx-auto">
-					{children}
+					<GoogleCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_FRONTEND_KEY || ''}>
+						{children}
+					</GoogleCaptchaProvider>
 				</div>
+				{
+					headerGlobal && socials && <Footer data={headerGlobal} socials={socials} />
+				}
 			</body>
-		</html>
+		</html >
 	);
 }

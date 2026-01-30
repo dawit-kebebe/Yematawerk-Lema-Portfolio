@@ -5,10 +5,9 @@ import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import Map from '../assets/Map';
 import SectionTitle from '../components/SectionTitle';
+import Div from '../components/motion/Div';
 import Section from '../components/motion/Section';
 import { NormalizedYamiTourType, YamiTourType } from '../types/blocks/YamiTour';
-import Div from '../components/motion/Div';
-import { scale } from 'motion/react';
 
 interface YamiTourProps {
     className?: string;
@@ -46,7 +45,7 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
     }, [currentTourIndex, tours]);
 
     return (
-        <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] pb-4 md:pb-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section">
+        <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] pb-4 md:pb-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section" id={`${data.blockType}`}>
             <SectionTitle title={`${data.section_title || 'Yami Tour'}`} />
             <div className='w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-8'>
                 <div className='w-full h-full'>

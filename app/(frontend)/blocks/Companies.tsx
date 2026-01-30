@@ -13,7 +13,7 @@ interface CompaniesProps {
 const Companies = ({ data, className }: CompaniesProps) => {
     return (
         // <section className={`py-8 px-4 md:px-8 2xl:px-16 ${className}`} >
-        <Section className={`py-8 px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Companies Section">
+        <Section className={`py-8 px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Companies Section" id={`${data.blockType}`}>
             <SectionTitle title={data.section_title || 'Companies I Worked With'} />
             <div className='w-full flex flex-wrap items-center justify-center gap-8 py-16'>
                 {data.companies.map((company) => (

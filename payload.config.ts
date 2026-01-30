@@ -1,63 +1,69 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { cloudinaryStorage } from 'payload-cloudinary'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-import nodemailer from 'nodemailer'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Pages } from './collections/Pages'
-import { Header } from './globals/Header'
-import { Landing } from './globals/Landing'
-import { About } from './globals/About'
+import { Authors } from './collections/Authors.ts'
+import { BlogCategories } from './collections/BlogCategories.ts'
+import { Blogs } from './collections/Blogs.ts'
+import { Media } from './collections/Media.ts'
+import { Socials } from './collections/Socials.ts'
+import { Users } from './collections/Users.ts'
+import { About } from './globals/About.ts'
+import { Header } from './globals/Header.ts'
+import { Landing } from './globals/Landing.ts'
+import { BlogPage } from './globals/Blog.ts'
+import { ImagePortfolio } from './collections/ImagePortfolio.ts'
+import { ContactUs } from './collections/ContactUs.ts'
 
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  admin: {
-    user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
-  },
-  collections: [Users, Media, Pages],
-  globals: [
-    Header,
-    Landing,
-    About
-  ],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
-  }),
-  sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
-  ],
-  // email: nodemailerAdapter({
-  //   transport:
-  //     nodemailer.createTransport({
-  //       host: process.env.SMTP_HOST,
-  //       port: 587,
-  //       auth: {
-  //         user: process.env.SMTP_USER,
-  //         pass: process.env.SMTP_PASS,
-  //       },
-  //     }),
-  //   defaultFromAddress: 'noreply@yourdomain.com',
-  //   defaultFromName: 'Your App Name',
-  // })
-
+	admin: {
+		user: Users.slug,
+		importMap: {
+			baseDir: path.resolve(dirname),
+		},
+	},
+	collections: [Users, Media, Socials, Blogs, Authors, BlogCategories, ImagePortfolio, ContactUs],
+	globals: [Header, Landing, About, BlogPage],
+	editor: lexicalEditor(),
+	secret: process.env.PAYLOAD_SECRET || '',
+	typescript: {
+		outputFile: path.resolve(dirname, 'payload-types.ts'),
+	},
+	db: mongooseAdapter({
+		url: process.env.DATABASE_URI || '',
+	}),
+	sharp,
+	plugins: [
+		payloadCloudPlugin(),
+		cloudinaryStorage({
+			config: {
+				cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '',
+				api_key: process.env.CLOUDINARY_API_KEY || '',
+				api_secret: process.env.CLOUDINARY_API_SECRET || '',
+			},
+			collections: {
+				media: {
+					// ✅ This forces the 'url' field to be the Cloudinary CDN link
+					disablePayloadAccessControl: true,
+				},
+			},
+			folder: 'payload-media',
+			publicID: {
+				enabled: true,
+				useFilename: true,
+				uniqueFilename: true, // This adds the "long number" suffix you like
+			},
+		}),
+		// storage-adapter-placeholder
+	],
 })

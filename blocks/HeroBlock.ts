@@ -4,6 +4,16 @@ export const HeroBlock: Block = {
     slug: 'hero',
     interfaceName: 'Hero',
     fields: [
+        {
+            name: 'blockSlug', // Field name
+            type: 'text',
+            admin: {
+                readOnly: true,
+                condition: () => true, // Ensures it's always visible
+                description: 'The internal identifier for this block type.',
+            },
+            defaultValue: '#hero', // Manually set to match the block slug
+        },
         { name: 'title', type: 'text', required: true, },
         { name: 'description', type: 'textarea', required: true },
         {
@@ -38,3 +48,5 @@ export const HeroBlock: Block = {
         }
     ]
 }
+
+// 0966416408

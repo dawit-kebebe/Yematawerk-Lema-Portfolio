@@ -1,18 +1,22 @@
 "use client";
+import { Social } from "@/payload-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Label, Textarea, TextInput } from "flowbite-react";
 import { useEffect } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
+import { HiMail, HiUser } from "react-icons/hi";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import SectionTitle from "../components/SectionTitle";
-import { HiMail, HiOutlineMail, HiUser } from "react-icons/hi";
+import Socials from "../components/Socials";
 
 interface ContactUsProps {
     className?: string;
     apiEndpoint?: string;
+    socials?: Social[];
 }
 
 const nameRegex = /^[A-Za-z\s.'-]+$/;
@@ -32,7 +36,7 @@ const schema = yup
 
 export type FormData = yup.InferType<typeof schema>;
 
-export function ContactUs({ className, apiEndpoint }: ContactUsProps) {
+export function ContactUs({ className, apiEndpoint, socials }: ContactUsProps) {
     const {
         register,
         handleSubmit,
@@ -49,18 +53,25 @@ export function ContactUs({ className, apiEndpoint }: ContactUsProps) {
         }
     }, [errors]);
 
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
     const onSubmit = async (data: FormData) => {
         try {
 
-            const payload = {
-                ...data
-            };
+            if (!executeRecaptcha) {
+                throw new Error("reCAPTCHA not yet available");
+            }
+
+            const token = await executeRecaptcha("contact_us_form");
+
+            if (!token) {
+                throw new Error("reCAPTCHA token not generated");
+            }
 
             const response = await fetch(apiEndpoint || "/api/contact-us", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: payload }),
+                body: JSON.stringify({ ...data, reCapchaToken: token }),
             });
 
             if (!response.ok) throw new Error("Network response was not ok");
@@ -75,10 +86,11 @@ export function ContactUs({ className, apiEndpoint }: ContactUsProps) {
     };
 
     return (
-        <>
+        <div className={`w-full flex flex-col gap-4 ${className}`}>
             <ToastContainer />
+            <SectionTitle title={'Reach Out'} />
+            <Socials socials={socials} />
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                <SectionTitle title={'Reach Out'} />
                 <div className="w-full flex flex-col items-center justify-center">
                     <div className="max-w-md w-full mb-4">
                         <div className="mb-2 block">
@@ -122,6 +134,6 @@ export function ContactUs({ className, apiEndpoint }: ContactUsProps) {
                     </div>
                 </div>
             </form>
-        </>
+        </div>
     );
 }

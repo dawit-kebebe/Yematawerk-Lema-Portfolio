@@ -1,6 +1,7 @@
 export type YamiTourType = {
     id: string;
     blockType: string;
+    blockSlug: string;
     section_title: string;
     tours: Array<{
         image: GalleryItem,

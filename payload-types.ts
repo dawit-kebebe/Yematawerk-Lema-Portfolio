@@ -69,6 +69,12 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    socials: Social;
+    blogs: Blog;
+    authors: Author;
+    'blog-categories': BlogCategory;
+    'image-portfolio': ImagePortfolio;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +83,12 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    socials: SocialsSelect<false> | SocialsSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
+    authors: AuthorsSelect<false> | AuthorsSelect<true>;
+    'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
+    'image-portfolio': ImagePortfolioSelect<false> | ImagePortfolioSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -84,8 +96,19 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  fallbackLocale: null;
+  globals: {
+    header: Header;
+    landing: Landing;
+    about: About;
+    'blog-page': BlogPage;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    landing: LandingSelect<false> | LandingSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+    'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -158,6 +181,109 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials".
+ */
+export interface Social {
+  id: string;
+  label: string;
+  url: string;
+  icon:
+    | 'facebook'
+    | 'instagram'
+    | 'twitter'
+    | 'tiktok'
+    | 'youtube'
+    | 'email'
+    | 'linkedin'
+    | 'github'
+    | 'website'
+    | 'pinterest'
+    | 'other';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: string;
+  banner?: (string | null) | Media;
+  title: string;
+  summary: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  author: string | Author;
+  blog_category: string | BlogCategory;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors".
+ */
+export interface Author {
+  id: string;
+  avatar?: (string | null) | Media;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories".
+ */
+export interface BlogCategory {
+  id: string;
+  label: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image-portfolio".
+ */
+export interface ImagePortfolio {
+  id: string;
+  image: string | Media;
+  title: string;
+  description: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: string;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -170,6 +296,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'socials';
+        value: string | Social;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'authors';
+        value: string | Author;
+      } | null)
+    | ({
+        relationTo: 'blog-categories';
+        value: string | BlogCategory;
+      } | null)
+    | ({
+        relationTo: 'image-portfolio';
+        value: string | ImagePortfolio;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -255,6 +401,70 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials_select".
+ */
+export interface SocialsSelect<T extends boolean = true> {
+  label?: T;
+  url?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  banner?: T;
+  title?: T;
+  summary?: T;
+  content?: T;
+  author?: T;
+  blog_category?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors_select".
+ */
+export interface AuthorsSelect<T extends boolean = true> {
+  avatar?: T;
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories_select".
+ */
+export interface BlogCategoriesSelect<T extends boolean = true> {
+  label?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image-portfolio_select".
+ */
+export interface ImagePortfolioSelect<T extends boolean = true> {
+  image?: T;
+  title?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -284,6 +494,403 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  title: string;
+  logo?: (string | null) | Media;
+  navigationLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  cta_button: {
+    label: string;
+    url: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing".
+ */
+export interface Landing {
+  id: string;
+  slug: string;
+  sections?: (Hero | Companies | Testimonials | ImagePortfolio1 | YamiTour | AboutTimeline)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Hero".
+ */
+export interface Hero {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  title: string;
+  description: string;
+  cta_button_1: {
+    label: string;
+    url: string;
+  };
+  cta_button_2: {
+    label: string;
+    url: string;
+  };
+  highlight_top_left: string;
+  highlight_bottom_left: string;
+  highlight_top_right: string;
+  highlight_bottom_right: string;
+  hero_img?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Companies".
+ */
+export interface Companies {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  companies: {
+    company_logo: string | Media;
+    company_name: string;
+    company_website: string;
+    company_description?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'companies';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Testimonials".
+ */
+export interface Testimonials {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  testimonials: {
+    avatar: string | Media;
+    name: string;
+    position: string;
+    quote: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImagePortfolio".
+ */
+export interface ImagePortfolio1 {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  portfolio_imgs: (string | Media)[];
+  cta: {
+    label: string;
+    url: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image-portfolio';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "YamiTour".
+ */
+export interface YamiTour {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  tours: {
+    image: string | Media;
+    tour_description: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'yami-tour';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTimeline".
+ */
+export interface AboutTimeline {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  timeline: {
+    date: string;
+    title: string;
+    description: string;
+    id?: string | null;
+  }[];
+  cta: {
+    label: string;
+    url: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'about';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: string;
+  title: string;
+  description: string;
+  banner: string | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page".
+ */
+export interface BlogPage {
+  id: string;
+  title: string;
+  description: string;
+  banner: string | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  title?: T;
+  logo?: T;
+  navigationLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  cta_button?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing_select".
+ */
+export interface LandingSelect<T extends boolean = true> {
+  slug?: T;
+  sections?:
+    | T
+    | {
+        hero?: T | HeroSelect<T>;
+        companies?: T | CompaniesSelect<T>;
+        testimonials?: T | TestimonialsSelect<T>;
+        'image-portfolio'?: T | ImagePortfolioSelect1<T>;
+        'yami-tour'?: T | YamiTourSelect<T>;
+        about?: T | AboutTimelineSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  blockSlug?: T;
+  title?: T;
+  description?: T;
+  cta_button_1?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  cta_button_2?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  highlight_top_left?: T;
+  highlight_bottom_left?: T;
+  highlight_top_right?: T;
+  highlight_bottom_right?: T;
+  hero_img?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Companies_select".
+ */
+export interface CompaniesSelect<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  companies?:
+    | T
+    | {
+        company_logo?: T;
+        company_name?: T;
+        company_website?: T;
+        company_description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  testimonials?:
+    | T
+    | {
+        avatar?: T;
+        name?: T;
+        position?: T;
+        quote?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImagePortfolio_select".
+ */
+export interface ImagePortfolioSelect1<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  portfolio_imgs?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "YamiTour_select".
+ */
+export interface YamiTourSelect<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  tours?:
+    | T
+    | {
+        image?: T;
+        tour_description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutTimeline_select".
+ */
+export interface AboutTimelineSelect<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  timeline?:
+    | T
+    | {
+        date?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  banner?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page_select".
+ */
+export interface BlogPageSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  banner?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

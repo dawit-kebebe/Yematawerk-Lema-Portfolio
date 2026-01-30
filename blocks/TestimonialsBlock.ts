@@ -1,9 +1,19 @@
-import { Block } from "payload";
+import type { Block } from "payload";
 
 export const TestimonialsBlock: Block = {
     slug: 'testimonials',
     interfaceName: 'Testimonials',
     fields: [
+        {
+            name: 'blockSlug', // Field name
+            type: 'text',
+            admin: {
+                readOnly: true,
+                condition: () => true, // Ensures it's always visible
+                description: 'The internal identifier for this block type.',
+            },
+            defaultValue: '#testimonials', // Manually set to match the block slug
+        },
         {
             name: 'section_title',
             label: 'Section Title',

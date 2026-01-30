@@ -12,7 +12,7 @@ interface LandingProps {
 
 const Landing = ({ data, className }: LandingProps) => {
     return (
-        <Section className={`w-full pb-4 md:pb-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 overflow-hidden ${className}`} aria-label="Landing Section">
+        <Section className={`w-full pb-4 md:pb-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 overflow-hidden ${className}`} aria-label="Landing Section" id={`${data.blockType}`}>
             <div className='md:w-1/2 md:h-full h-fit col-span-1 flex flex-col md:justify-center space-y-6'>
                 <h1 className='font-michroma text-center md:text-left text-4xl md:text-6xl lg:text-8xl text-primary-700 dark:text-primary-600'>{data.title}</h1>
                 <p className='text-2xl text-center md:text-left md:text-3xl max-w-3xl'>{data.description}</p>

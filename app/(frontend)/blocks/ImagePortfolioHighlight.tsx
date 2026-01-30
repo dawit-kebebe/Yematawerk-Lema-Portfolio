@@ -15,7 +15,7 @@ interface ImagePortfolioHighlightProps {
 
 const ImagePortfolioHighlight = ({ data, className }: ImagePortfolioHighlightProps) => {
     return (
-        <Section className={`py-8 px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Portfolio Highlights Section">
+        <Section className={`py-8 px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Portfolio Highlights Section" id={`${data.blockType}`}>
             <SectionTitle title={data.section_title || 'My Selected Works'} />
             <div className='w-full gap-8 py-16'>
                 <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2 }}>

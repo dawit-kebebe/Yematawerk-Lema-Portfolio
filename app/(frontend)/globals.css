@@ -7,14 +7,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif,
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --header-height: 5.02rem;
 }
 
 /* Override font for Amharic language */
 html[lang="am"] {
-  --font-sans: var(--font-geez-manuscript), var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geez-manuscript), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 @custom-variant dark (&:where(.dark, .dark *)); 
@@ -54,14 +54,16 @@ html[lang="am"] {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  /* --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono); */
+  --font-sans: var(--font-geist-sans);
+  /* 
+  --font-mono: var(--font-geist-mono); 
   --font-sans: var(--font-poppins);
+  */
 }
 
 /* Default font-family to Poppins throughout */
 html, body {
-  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Utility for Michroma font via Tailwind custom family name */
