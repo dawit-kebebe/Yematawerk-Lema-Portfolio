@@ -3,6 +3,9 @@ import slugify from 'slugify';
 
 export const Blogs: CollectionConfig = {
     slug: 'blogs',
+    access: {
+        read: () => true,
+    },
     labels: {
         singular: 'Blog',
         plural: 'Blogs',

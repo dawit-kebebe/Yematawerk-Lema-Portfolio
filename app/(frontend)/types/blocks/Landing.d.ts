@@ -1,3 +1,5 @@
+import { GalleryItem } from "../GalleryItem"
+
 export type LandingType = {
     blockType: string,
     blockSlug: string,

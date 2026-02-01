@@ -1,34 +1,32 @@
 "use client";
 
+import { Blog } from '@/payload-types';
 import BlogList from '@frontend/components/BlogList'
 import { Button, Popover, TextInput } from 'flowbite-react'
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 import { HiSearch } from 'react-icons/hi'
+import qs from 'qs';
 
-interface BlogCategory {
-    title: string;
-    categoryId: string;
-}
-
-interface Blog {
-    id: string,
-    createdAt: string,
-    title: string,
-    description?: string,
-    content: string,
-    slug: string,
-    banner: {
-        formats: {
-            large: {
-                url: string,
-                width: number,
-                height: number,
-            }
+function searchBlogs(searchTerm: string) {
+    const query = {
+        where: {
+            or: [
+                {
+                    title: {
+                        like: searchTerm, // Partial match, case-insensitive
+                    },
+                },
+                {
+                    content: {
+                        like: searchTerm,
+                    },
+                },
+            ],
         },
-        url: string
-    }
-    main_blog_category: BlogCategory
+    };
+
+    return qs.stringify(query, { addQueryPrefix: true });
 }
 
 const Search = () => {
@@ -46,7 +44,7 @@ const Search = () => {
                 setIsLoading(true);
 
                 try {
-                    const res = await fetch(`/api/main/search/${encodeURIComponent(searchQuery)}`, {
+                    const res = await fetch(`/api/blogs/${searchBlogs(searchQuery)}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
@@ -55,8 +53,8 @@ const Search = () => {
 
                     const data = await res.json();
 
-                    if (data && data.data && Array.isArray(data.data)) {
-                        setSearchResult(data.data);
+                    if (data && data.docs && Array.isArray(data.docs)) {
+                        setSearchResult(data.docs);
                     } else {
                         console.error("Search request failed:", data);
                         setSearchResult([]);

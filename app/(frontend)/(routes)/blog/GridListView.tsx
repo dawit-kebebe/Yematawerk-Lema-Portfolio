@@ -5,7 +5,7 @@ import MKBlogCard from '@frontend/components/MKBlogCard';
 import { readingTime } from '@frontend/utils/readtime';
 import { TabItem, Tabs } from 'flowbite-react';
 import { getLexicalText } from '@frontend/utils/getLexicalText';
-import Search from './search';
+import Search from '../../components/search';
 
 interface GridListViewProps {
     items: Blog[];

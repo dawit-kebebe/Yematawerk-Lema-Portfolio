@@ -4,6 +4,7 @@ import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLin
 import Image from "next/image";
 import Link from "next/link";
 import { GalleryItem } from "../types/GalleryItem";
+import Search from "./search";
 
 interface HeaderProps {
     data: {
@@ -32,6 +33,9 @@ export function Header({ data }: HeaderProps) {
                 <span className="hidden sm:inline self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">{data.title}</span>
             </NavbarBrand>
             <div className="flex md:order-2">
+                <div className="p-2 md:p-4">
+                    <Search />
+                </div>
                 <DarkThemeToggle className="mx-4 p-4 text-xl cursor-pointer" />
                 {/* {data.cta_button && (
                     <Button className="hidden sm:block text-xl cursor-pointer"><Link href={data.cta_button.url}>{data.cta_button.label}</Link></Button>

@@ -1,32 +1,9 @@
-import React from 'react';
+"use client";
+
+import { Blog } from '@/payload-types';
 import { List, ListItem } from "flowbite-react";
 import Image from 'next/image';
 import Link from 'next/link';
-
-interface BlogCategory {
-    title: string;
-    categoryId: string;
-}
-
-export interface Blog {
-    id: string,
-    createdAt: string,
-    title: string,
-    description?: string,
-    content: string,
-    slug: string,
-    banner: {
-        formats: {
-            large: {
-                url: string,
-                width: number,
-                height: number,
-            }
-        },
-        url: string
-    }
-    main_blog_category: BlogCategory
-}
 
 interface BlogListProps {
     blogs: Blog[];
@@ -52,22 +29,22 @@ export function BlogList({ blogs }: BlogListProps) {
                             size="md" 
                         /> */}
                         <Image
-                            src={(blog.banner.formats.large?.url || blog.banner.url) || "/default-banner.png"}
-                            alt={blog.title ? `${blog.title} banner` : "Blog banner"}
-                            width={100}
-                            height={100}
+                            src={(typeof blog.banner === 'object' && blog.banner !== null && blog.banner.url) || "/default-banner.png"}
+                            alt={(typeof blog.banner === 'object' && blog.banner !== null && blog.banner.alt) || `${blog.title} banner`}
+                            width={300}
+                            height={300}
                             className="h-16 w-16 rounded-lg object-cover"
                             loading="lazy"
                             placeholder="blur"
-                            blurDataURL={(blog.banner.formats.large?.url || blog.banner.url)}
+                            blurDataURL={(typeof blog.banner === 'object' && blog.banner !== null && blog.banner.thumbnailURL) || "/default-banner.png"}
                         />
 
                         <div className="min-w-0 flex-1"              >
-                            <h2 id={`blog-title-${index}`} className="truncate text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <h2 id={`blog-title-${index}`} className="line-clamp-1 text-sm font-medium text-gray-900 dark:text-gray-300">
                                 {blog.title}
                             </h2>
-                            <p className="truncate text-sm text-gray-800 dark:text-gray-400">
-                                {blog.description}
+                            <p className="line-clamp-3 text-sm text-gray-800 dark:text-gray-400">
+                                {blog.summary}
                             </p>
                         </div>
                         <div className="inline-flex items-center text-base font-semibold text-gray-900">
