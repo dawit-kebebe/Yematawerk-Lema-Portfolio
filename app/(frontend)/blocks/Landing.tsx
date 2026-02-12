@@ -25,7 +25,7 @@ const Landing = ({ data, className }: LandingProps) => {
             </div>
             <div className='col-span-1 relative w-full md:w-1/2 h-[70vh] md:h-[90vh]'>
                 <div className='relative w-full h-full'>
-                    <Image src={data.hero_img.url} fill alt="Landing Image" className='w-full object-cover' />
+                    <Image src={data.hero_img.url} fill alt={data.hero_img.alt || "Landing Image"} className='w-full object-contain' />
                 </div>
                 <div className='absolute z-10 bottom-0 flex flex-col gap-8 w-full'>
                     <div className='w-full flex justify-between gap-2 md:gap-8'>

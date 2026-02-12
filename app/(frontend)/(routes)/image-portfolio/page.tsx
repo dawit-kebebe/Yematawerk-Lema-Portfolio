@@ -58,5 +58,3 @@ const ImagePortfolioPage = async ({ searchParams }: ImagePortfolioPageProps) => 
 }
 
 export default ImagePortfolioPage
-
-export const revalidate = 3600; // Revalidate every hour

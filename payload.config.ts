@@ -1,4 +1,3 @@
-// storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { cloudinaryStorage } from 'payload-cloudinary'
@@ -20,6 +19,7 @@ import { Landing } from './globals/Landing.ts'
 import { BlogPage } from './globals/Blog.ts'
 import { ImagePortfolio } from './collections/ImagePortfolio.ts'
 import { ContactUs } from './collections/ContactUs.ts'
+import { revalidatePath } from 'next/cache'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -31,6 +31,23 @@ export default buildConfig({
 		importMap: {
 			baseDir: path.resolve(dirname),
 		},
+	},
+	onInit: async (payload) => {
+		Object.values(payload.collections).forEach((collection) => {
+			const collectionSlug = collection.config.slug
+
+			const originalAfterChange = collection.config.hooks?.afterChange || []
+
+			collection.config.hooks = {
+				...collection.config.hooks,
+				afterChange: [
+					...originalAfterChange,
+					async () => {
+						revalidatePath('/', 'layout');
+					}
+				]
+			}
+		})
 	},
 	collections: [Users, Media, Socials, Blogs, Authors, BlogCategories, ImagePortfolio, ContactUs],
 	globals: [Header, Landing, About, BlogPage],
