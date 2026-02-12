@@ -34,8 +34,6 @@ export default buildConfig({
 	},
 	onInit: async (payload) => {
 		Object.values(payload.collections).forEach((collection) => {
-			const collectionSlug = collection.config.slug
-
 			const originalAfterChange = collection.config.hooks?.afterChange || []
 
 			collection.config.hooks = {
@@ -43,7 +41,9 @@ export default buildConfig({
 				afterChange: [
 					...originalAfterChange,
 					async () => {
-						revalidatePath('/', 'layout');
+						try {
+							revalidatePath('/', 'layout');
+						} catch (error) { console.error('Error revalidating path:', error); }
 					}
 				]
 			}
