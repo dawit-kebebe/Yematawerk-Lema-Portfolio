@@ -74,6 +74,7 @@ export interface Config {
     authors: Author;
     'blog-categories': BlogCategory;
     'image-portfolio': ImagePortfolio;
+    'contact-us': ContactUs;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'image-portfolio': ImagePortfolioSelect<false> | ImagePortfolioSelect<true>;
+    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -267,6 +269,19 @@ export interface ImagePortfolio {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us".
+ */
+export interface ContactUs {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  reCapchaToken?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -316,6 +331,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'image-portfolio';
         value: string | ImagePortfolio;
+      } | null)
+    | ({
+        relationTo: 'contact-us';
+        value: string | ContactUs;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -457,6 +476,18 @@ export interface ImagePortfolioSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us_select".
+ */
+export interface ContactUsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
+  reCapchaToken?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -524,7 +555,7 @@ export interface Header {
 export interface Landing {
   id: string;
   slug: string;
-  sections?: (Hero | Companies | Testimonials | ImagePortfolio1 | YamiTour | AboutTimeline)[] | null;
+  sections?: (Hero | Companies | Testimonials | ImagePortfolio1 | YamiTour | AboutTimeline | Services)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -662,6 +693,36 @@ export interface AboutTimeline {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Services".
+ */
+export interface Services {
+  /**
+   * The internal identifier for this block type.
+   */
+  blockSlug?: string | null;
+  section_title: string;
+  services: {
+    title: string;
+    price: number;
+    currency: '$' | 'Birr';
+    period: 'day' | 'week' | 'month' | 'year';
+    service_items: {
+      caption: string;
+      isIncluded: boolean;
+      id?: string | null;
+    }[];
+    cta: {
+      label: string;
+      url: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'service';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about".
  */
 export interface About {
@@ -738,6 +799,7 @@ export interface LandingSelect<T extends boolean = true> {
         'image-portfolio'?: T | ImagePortfolioSelect1<T>;
         'yami-tour'?: T | YamiTourSelect<T>;
         about?: T | AboutTimelineSelect<T>;
+        service?: T | ServicesSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -863,6 +925,38 @@ export interface AboutTimelineSelect<T extends boolean = true> {
     | {
         label?: T;
         url?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  blockSlug?: T;
+  section_title?: T;
+  services?:
+    | T
+    | {
+        title?: T;
+        price?: T;
+        currency?: T;
+        period?: T;
+        service_items?:
+          | T
+          | {
+              caption?: T;
+              isIncluded?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
       };
   id?: T;
   blockName?: T;

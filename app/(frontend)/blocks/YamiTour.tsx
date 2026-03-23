@@ -45,7 +45,7 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
     }, [currentTourIndex, tours]);
 
     return (
-        <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] pb-4 md:pb-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section" id={`${data.blockType}`}>
+        <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] py-4 md:py-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section" id={`${data.blockType}`}>
             <SectionTitle title={`${data.section_title || 'Yami Tour'}`} />
             <div className='w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-8'>
                 <div className='w-full h-full'>
@@ -81,7 +81,7 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
                                 width={tours[currentTourIndex].image.width}
                                 height={tours[currentTourIndex].image.height}
                                 alt={tours[currentTourIndex].image.alt}
-                                className='object-contain object-center w-full h-auto ' />
+                                className='object-cover object-center w-full h-full' />
                         }
                     </Div>
                 </div>
