@@ -9,12 +9,14 @@ import Testimonials from '../blocks/Testimonials';
 import YamiTour from '../blocks/YamiTour';
 import { AboutType } from '../types/blocks/About';
 import { YamiTourType } from '../types/blocks/YamiTour';
+import { Landing2Type } from '../types/blocks/Landing';
+import Landing2 from '../blocks/Landing2';
 
 interface RenderBlocksProps {
-    data: [LandingType, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, AboutType, ServiceType]
+    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, AboutType, ServiceType]
 }
 
-type BlockTypes = LandingType | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | AboutType | ServiceType;
+type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | AboutType | ServiceType;
 
 const RenderBlocks = ({ data }: RenderBlocksProps) => {
     return (
@@ -22,6 +24,8 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
             {data.map((block, index) => {
                 const isLanding = (b: BlockTypes): b is LandingType =>
                     b.blockType === 'hero'
+                const isLanding2 = (b: BlockTypes): b is Landing2Type =>
+                    b.blockType === 'hero-2'
                 const isCompanies = (b: BlockTypes): b is CompaniesType =>
                     b.blockType === 'companies'
                 const isTestimonials = (b: BlockTypes): b is TestimonialsType =>
@@ -32,6 +36,7 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
                 const isService = (b: BlockTypes): b is ServiceType => b.blockType === 'service'
 
                 if (isLanding(block)) return <Landing key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
+                if (isLanding2(block)) return <Landing2 key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isCompanies(block)) return <Companies key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isTestimonials(block)) return <Testimonials key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isService(block)) return <Services key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />

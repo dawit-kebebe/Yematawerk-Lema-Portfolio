@@ -49,4 +49,50 @@ export const HeroBlock: Block = {
     ]
 }
 
+export const HeroBlock2: Block = {
+    slug: 'hero-2',
+    interfaceName: 'Hero 2',
+    fields: [
+        {
+            name: 'blockSlug', // Field name
+            type: 'text',
+            admin: {
+                readOnly: true,
+                condition: () => true, // Ensures it's always visible
+                description: 'The internal identifier for this block type.',
+            },
+            defaultValue: '#hero-2', // Manually set to match the block slug
+        },
+        {
+            name: 'notification', label: "Notification", type: 'group', fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'url', type: 'text', required: true }
+            ],
+            required: false
+        },
+        { name: 'title', type: 'text', required: true, },
+        { name: 'description', type: 'textarea', required: true },
+        {
+            name: 'cta_button_1',
+            label: 'CTA Button 1',
+            type: 'group',
+            fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'url', type: 'text', required: true }
+            ],
+            required: true
+        },
+        {
+            name: 'cta_button_2',
+            label: 'CTA Button 2',
+            type: 'group',
+            fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'url', type: 'text', required: true }
+            ],
+            required: false
+        },
+    ]
+}
+
 // 0966416408

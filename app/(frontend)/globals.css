@@ -12,26 +12,9 @@
     --header-height: 5.02rem;
 }
 
-/* Override font for Amharic language */
 html[lang="am"] {
   --font-sans: var(--font-geez-manuscript), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
-
-@custom-variant dark (&:where(.dark, .dark *)); 
-
-/* @theme {
-  --color-primary-50:  #eff8ff;
-  --color-primary-100: #def0ff;
-  --color-primary-200: #b6e2ff;
-  --color-primary-300: #76ccff;
-  --color-primary-400: #2db3ff;
-  --color-primary-500: #0299f5;
-  --color-primary-600: #0079d2;
-  --color-primary-700: #0060aa;
-  --color-primary-800: #005897;
-  --color-primary-900: #074473;
-  --color-primary-950: #042b4d;
-} */
 
 @theme {
   --color-primary-50: #fef4ee;
@@ -47,36 +30,19 @@ html[lang="am"] {
   --color-primary-950: #410c09;
 }
 
-/* 'flamingo': {
-}, */
-
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  /* 
-  --font-mono: var(--font-geist-mono); 
-  --font-sans: var(--font-poppins);
-  */
 }
 
-/* Default font-family to Poppins throughout */
 html, body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-/* Utility for Michroma font via Tailwind custom family name */
 .font-michroma {
   font-family: var(--font-michroma);
-  /* var(--font-poppins), ui-sans-serif, system-ui, sans-serif; */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 html,
@@ -85,11 +51,17 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 
-  @apply bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  @apply bg-primary-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50 transition-colors duration-300 ease-in-out;
 }
 
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+button {
+  @apply cursor-pointer focus:ring-2;
+}
+
+* {
+  scrollbar-width: thin;
+	scrollbar-color: var(--color-primary-700) transparent;
+}

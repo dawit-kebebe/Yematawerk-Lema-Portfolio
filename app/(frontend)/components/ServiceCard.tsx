@@ -21,7 +21,7 @@ export function ServiceCard({ data }: ServiceCardProps) {
                     {
                         data.service_items.map((item: any) => {
                             return item.isIncluded ? (
-                                <li className="flex space-x-3">
+                                <li className="flex space-x-3" key={item.id}>
                                     <svg
                                         className="h-5 w-5 shrink-0 text-primary-600 dark:text-primary-500"
                                         fill="currentColor"
@@ -37,7 +37,7 @@ export function ServiceCard({ data }: ServiceCardProps) {
                                     <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">{item.caption}</span>
                                 </li>
                             ) : (
-                                <li className="flex space-x-3 line-through decoration-gray-500">
+                                <li className="flex space-x-3 line-through decoration-gray-500" key={item.id}>
                                     <svg
                                         className="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
                                         fill="currentColor"

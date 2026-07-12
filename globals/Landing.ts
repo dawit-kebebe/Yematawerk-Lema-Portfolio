@@ -2,7 +2,7 @@ import { ServiceBlock } from '@/blocks/ServiceBlock.ts';
 import type { GlobalConfig } from 'payload';
 import { AboutBlock } from '../blocks/AboutBlock.ts';
 import { CompaniesBlock } from '../blocks/CompaniesBlock.ts';
-import { HeroBlock } from '../blocks/HeroBlock.ts';
+import { HeroBlock, HeroBlock2 } from '../blocks/HeroBlock.ts';
 import { ImagePortfolioBlock } from '../blocks/ImagePortfolioBlock.ts';
 import { TestimonialsBlock } from '../blocks/TestimonialsBlock.ts';
 import { YamiTourBlock } from '../blocks/YamiTour.ts';
@@ -31,7 +31,7 @@ export const Landing: GlobalConfig = {
         {
             name: 'sections',
             type: 'blocks',
-            blocks: [HeroBlock, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, ServiceBlock],
+            blocks: [HeroBlock, HeroBlock2, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, ServiceBlock],
         }
     ]
 }

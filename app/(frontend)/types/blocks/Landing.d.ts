@@ -20,3 +20,25 @@ export type LandingType = {
     hero_img: GalleryItem,
     id: string
 }
+
+
+export interface Landing2Type {
+    blockType: string;
+    blockSlug: string;
+    notification?: {
+        label: string,
+        url: string
+    },
+    title: string;
+    description: string;
+    cta_button_1: {
+        label: string;
+        url: string;
+    };
+    cta_button_2?: {
+        label: string;
+        url: string;
+    };
+    hero_img: GalleryItem;
+    id: string;
+}

@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
+import { DarkThemeToggle, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Image from "next/image";
-import Link from "next/link";
 import { GalleryItem } from "../types/GalleryItem";
 import Search from "./search";
 
@@ -32,7 +31,7 @@ export function Header({ data }: HeaderProps) {
                 <Image src={data.logo?.url || '/favicon.svg'} alt={data.logo?.alt || 'Logo'} width={40} height={40} className="mr-3 h-6 sm:h-9" />
                 <span className="hidden sm:inline self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">{data.title}</span>
             </NavbarBrand>
-            <div className="flex md:order-2">
+            <div className="flex items-center md:order-2">
                 <div className="p-2 md:p-4">
                     <Search />
                 </div>
