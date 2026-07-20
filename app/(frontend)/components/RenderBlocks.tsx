@@ -11,12 +11,14 @@ import { AboutType } from '../types/blocks/About';
 import { YamiTourType } from '../types/blocks/YamiTour';
 import { Landing2Type } from '../types/blocks/Landing';
 import Landing2 from '../blocks/Landing2';
+import { WefVisualsType } from '../types/blocks/WefVisuals';
+import WefVisuals from '../blocks/WefVisuals';
 
 interface RenderBlocksProps {
     data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, AboutType, ServiceType]
 }
 
-type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | AboutType | ServiceType;
+type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServiceType;
 
 const RenderBlocks = ({ data }: RenderBlocksProps) => {
     return (
@@ -32,6 +34,7 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
                     b.blockType === 'testimonials'
                 const isImagePortfolios = (b: BlockTypes): b is ImagePortfolioType => b.blockType === 'image-portfolio'
                 const isYamiTour = (b: BlockTypes): b is YamiTourType => b.blockType === 'yami-tour'
+                const isWefVisuals = (b: BlockTypes): b is WefVisualsType => b.blockType === 'wefvisuals'
                 const isAbout = (b: BlockTypes): b is AboutType => b.blockType === 'about'
                 const isService = (b: BlockTypes): b is ServiceType => b.blockType === 'service'
 
@@ -42,6 +45,7 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
                 if (isService(block)) return <Services key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isImagePortfolios(block)) return <ImagePortfolioHighlight key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isYamiTour(block)) return <YamiTour key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
+                if (isWefVisuals(block)) return <WefVisuals key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isAbout(block)) return <About key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 return null
             })}

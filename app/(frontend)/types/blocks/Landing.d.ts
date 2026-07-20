@@ -39,6 +39,5 @@ export interface Landing2Type {
         label: string;
         url: string;
     };
-    hero_img: GalleryItem;
     id: string;
 }

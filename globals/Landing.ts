@@ -6,6 +6,7 @@ import { HeroBlock, HeroBlock2 } from '../blocks/HeroBlock.ts';
 import { ImagePortfolioBlock } from '../blocks/ImagePortfolioBlock.ts';
 import { TestimonialsBlock } from '../blocks/TestimonialsBlock.ts';
 import { YamiTourBlock } from '../blocks/YamiTour.ts';
+import { WefVisualsBlock } from '@/blocks/WefVisuals.ts';
 
 export const Landing: GlobalConfig = {
     slug: 'landing',
@@ -31,7 +32,7 @@ export const Landing: GlobalConfig = {
         {
             name: 'sections',
             type: 'blocks',
-            blocks: [HeroBlock, HeroBlock2, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, ServiceBlock],
+            blocks: [HeroBlock, HeroBlock2, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, WefVisualsBlock, ServiceBlock],
         }
     ]
 }
