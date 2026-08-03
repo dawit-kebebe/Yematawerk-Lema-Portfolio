@@ -15,7 +15,7 @@ import { WefVisualsType } from '../types/blocks/WefVisuals';
 import WefVisuals from '../blocks/WefVisuals';
 
 interface RenderBlocksProps {
-    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, AboutType, ServiceType]
+    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, WefVisualsType, AboutType, ServiceType]
 }
 
 type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServiceType;
