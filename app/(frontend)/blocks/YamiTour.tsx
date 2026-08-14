@@ -48,11 +48,8 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
         <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] py-4 md:py-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section" id={`${data.blockType}`}>
             <SectionTitle title={`${data.section_title || 'Yami Tour'}`} />
             <div className='w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-8'>
-                <div className='w-full h-full'>
-                    <Map pinPoint={positioningFactor} className='w-full h-full object-contain' />
-                </div>
                 <div className='w-full h-full flex flex-wrap-reverse md:flex-nowrap relative'>
-                    <Card className='hidden md:flex w-full md:self-center md:-translate-x-1/2 absolute z-2 '>
+                    <Card className='hidden md:flex w-full md:self-center md:translate-x-1/2 absolute z-2 '>
                         {tours.length > 0 &&
                             (<Div
                                 key={`description-${tours[currentTourIndex].id}`}
@@ -65,11 +62,12 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
 
                         <Button onClick={nextTourHandler} className='self-end rounded-full w-fit cursor-pointer'><ArrowRightIcon /></Button>
                     </Card>
-                    <div className='w-full flex flex-col md:hidden p-4 absolute z-2 bg-transparent dark:bg-transparent backdrop-blur-2xl text-white md:text-gray-900 md:bg-white md:dark:bg-gray-800'>
+                    {/* absolute z-2 bg-transparent dark:bg-transparent backdrop-blur-2xl text-white md:text-gray-900 md:bg-white md:dark:bg-gray-800 */}
+                    <Card className='w-full flex flex-col md:hidden text-justify'>
                         {tours.length > 0 && (<>{tours[currentTourIndex].tour_description}</>)}
 
                         <Button onClick={nextTourHandler} className='self-end rounded-full w-fit cursor-pointer'><ArrowRightIcon /></Button>
-                    </div>
+                    </Card>
                     <Div
                         key={`image-${tours[currentTourIndex]?.id || 0}`}
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.3 }}
@@ -84,6 +82,9 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
                                 className='object-cover object-center w-full h-full' />
                         }
                     </Div>
+                </div>
+                <div className='w-full h-full'>
+                    <Map pinPoint={positioningFactor} className='w-full h-full object-contain' />
                 </div>
             </div>
 
