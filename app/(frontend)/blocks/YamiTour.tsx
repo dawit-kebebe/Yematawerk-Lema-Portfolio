@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRightIcon, Button, Card } from 'flowbite-react';
+import { ArrowLeftIcon, ArrowRightIcon, Button, Card } from 'flowbite-react';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import Map from '../assets/Map';
@@ -44,6 +44,15 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
         setCurrentTourIndex(nextIndex);
     }, [currentTourIndex, tours]);
 
+    const prevTourHandler = useCallback(() => {
+        if (currentTourIndex > 0) {
+            const prevIndex = currentTourIndex - 1;
+            const prevTour = tours[prevIndex];
+            setPositioningFactor(prevTour.pinPoint);
+            setCurrentTourIndex(prevIndex);
+        }
+    }, [currentTourIndex, tours]);
+
     return (
         <Section className={`w-full mt-8 overflow-y-hidden md:max-h-[95vh] py-4 md:py-8 flex flex-wrap items-center justify-center px-4 md:px-8 2xl:px-16 ${className}`} aria-label="Yami Tour Section" id={`${data.blockType}`}>
             <SectionTitle title={`${data.section_title || 'Yami Tour'}`} />
@@ -60,26 +69,49 @@ const YamiTour = ({ className, data }: YamiTourProps) => {
                                 {tours[currentTourIndex].tour_description}
                             </Div>)}
 
-                        <Button onClick={nextTourHandler} className='self-end rounded-full w-fit cursor-pointer'><ArrowRightIcon /></Button>
+                        <div className='flex items-center gap-2 self-end mt-4'>
+                            {currentTourIndex > 0 && (
+                                <Button onClick={prevTourHandler} aria-label="Previous story" className='rounded-full w-fit cursor-pointer'>
+                                    <ArrowLeftIcon />
+                                </Button>
+                            )}
+                            <Button onClick={nextTourHandler} aria-label="Next story" className='rounded-full w-fit cursor-pointer'>
+                                <ArrowRightIcon />
+                            </Button>
+                        </div>
                     </Card>
                     {/* absolute z-2 bg-transparent dark:bg-transparent backdrop-blur-2xl text-white md:text-gray-900 md:bg-white md:dark:bg-gray-800 */}
                     <Card className='w-full flex flex-col md:hidden text-justify'>
                         {tours.length > 0 && (<>{tours[currentTourIndex].tour_description}</>)}
 
-                        <Button onClick={nextTourHandler} className='self-end rounded-full w-fit cursor-pointer'><ArrowRightIcon /></Button>
+                        <div className='flex items-center gap-2 self-end mt-4'>
+                            {currentTourIndex > 0 && (
+                                <Button onClick={prevTourHandler} aria-label="Previous story" className='rounded-full w-fit cursor-pointer'>
+                                    <ArrowLeftIcon />
+                                </Button>
+                            )}
+                            <Button onClick={nextTourHandler} aria-label="Next story" className='rounded-full w-fit cursor-pointer'>
+                                <ArrowRightIcon />
+                            </Button>
+                        </div>
                     </Card>
                     <Div
                         key={`image-${tours[currentTourIndex]?.id || 0}`}
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.3 }}
-                        className='md:absolute w-full h-full overflow-hidden md:z-0'>
+                        style={{
+                            aspectRatio: tours[currentTourIndex]?.image?.width && tours[currentTourIndex]?.image?.height
+                                ? `${tours[currentTourIndex].image.width} / ${tours[currentTourIndex].image.height}`
+                                : undefined
+                        }}
+                        className='relative w-full max-h-[60vh] sm:max-h-[70vh] rounded-2xl overflow-hidden shadow-md bg-gray-100 dark:bg-gray-800/50 flex items-center justify-center md:aspect-auto md:max-h-none md:h-full md:rounded-none md:shadow-none md:bg-transparent md:absolute md:inset-0 md:z-0 mb-4 md:mb-0'>
                         {tours.length > 0 &&
                             tours[currentTourIndex] &&
                             <Image
                                 src={tours[currentTourIndex].image.url}
                                 width={tours[currentTourIndex].image.width}
                                 height={tours[currentTourIndex].image.height}
-                                alt={tours[currentTourIndex].image.alt}
-                                className='object-cover object-center w-full h-full' />
+                                alt={tours[currentTourIndex].image.alt || 'Yami tour image'}
+                                className='w-full h-full object-contain md:object-cover md:object-center rounded-2xl md:rounded-none' />
                         }
                     </Div>
                 </div>
