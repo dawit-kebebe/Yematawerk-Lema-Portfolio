@@ -545,6 +545,22 @@ export interface Header {
     label: string;
     url: string;
   };
+  colorTheme?: {
+    preset?: ('orange' | 'emerald' | 'blue' | 'purple' | 'rose' | 'amber' | 'teal' | 'custom') | null;
+    customShades?: {
+      primary50?: string | null;
+      primary100?: string | null;
+      primary200?: string | null;
+      primary300?: string | null;
+      primary400?: string | null;
+      primary500?: string | null;
+      primary600?: string | null;
+      primary700?: string | null;
+      primary800?: string | null;
+      primary900?: string | null;
+      primary950?: string | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -623,6 +639,7 @@ export interface Testimonials {
     name: string;
     position: string;
     quote: string;
+    reference_url?: string | null;
     id?: string | null;
   }[];
   id?: string | null;

@@ -44,6 +44,15 @@ export const TestimonialsBlock: Block = {
                     name: 'quote',
                     type: 'textarea',
                     required: true,
+                },
+                {
+                    name: 'reference_url',
+                    label: 'Reference Link / Original Post URL',
+                    type: 'text',
+                    required: false,
+                    admin: {
+                        description: 'Optional link to original testimonial post (e.g. LinkedIn, Google, Facebook)',
+                    },
                 }
             ],
             required: true,

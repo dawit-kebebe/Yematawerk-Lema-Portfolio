@@ -8,6 +8,7 @@ export type TestimonialsType = {
         quote: string;
         name: string;
         position: string;
+        reference_url?: string;
         id: string;
     }>;
 }

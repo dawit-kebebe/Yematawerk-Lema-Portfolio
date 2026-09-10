@@ -101,6 +101,7 @@ export function ContactUs({ className, apiEndpoint, socials }: ContactUsProps) {
                             rightIcon={HiUser}
                             id="name"
                             type="text"
+                            autoComplete="name"
                             placeholder="Name"
                             color={errors.name ? 'failure' : undefined}
                         />
@@ -115,6 +116,7 @@ export function ContactUs({ className, apiEndpoint, socials }: ContactUsProps) {
                             rightIcon={HiMail}
                             id="email"
                             type="email"
+                            autoComplete="email"
                             placeholder="name@example.com"
                             color={errors.email ? 'failure' : undefined}
                         />

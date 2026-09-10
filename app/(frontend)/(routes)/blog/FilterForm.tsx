@@ -39,15 +39,15 @@ const FilterForm = ({ filter, authorFilter, authors }: FilterFormProps) => {
                             </AccordionTitle>
                             <AccordionContent className='flex flex-col gap-2'>
                                 <Label htmlFor="date-today" className="font-normal text-lg">
-                                    <Radio value="date-today" name="filter" className="mr-2" defaultChecked={filter === "date-today"} />
+                                    <Radio id="date-today" value="date-today" name="filter" className="mr-2" defaultChecked={filter === "date-today"} />
                                     Today
                                 </Label>
                                 <Label htmlFor="date-week" className="font-normal text-lg">
-                                    <Radio value="date-week" name="filter" className="mr-2" defaultChecked={filter === "date-week"} />
+                                    <Radio id="date-week" value="date-week" name="filter" className="mr-2" defaultChecked={filter === "date-week"} />
                                     This Week
                                 </Label>
                                 <Label htmlFor="date-month" className="font-normal text-lg">
-                                    <Radio value="date-month" name="filter" className="mr-2" defaultChecked={filter === "date-month"} />
+                                    <Radio id="date-month" value="date-month" name="filter" className="mr-2" defaultChecked={filter === "date-month"} />
                                     This Month
                                 </Label>
                             </AccordionContent>
@@ -60,7 +60,7 @@ const FilterForm = ({ filter, authorFilter, authors }: FilterFormProps) => {
                                 {
                                     authors.map(author => (
                                         <Label htmlFor={author.id} className="font-normal text-lg" key={author.id}>
-                                            <Radio value={author.id} name="author" className="mr-2" defaultChecked={authorFilter === author.id} />
+                                            <Radio id={author.id} value={author.id} name="author" className="mr-2" defaultChecked={authorFilter === author.id} />
                                             {author.name}
                                         </Label>
                                     ))

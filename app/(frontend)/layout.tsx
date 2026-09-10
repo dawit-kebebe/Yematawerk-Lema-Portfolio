@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import GoogleCaptchaProvider from "./components/GoogleCaptchaProvider";
 import "./globals.css";
 import { SocialsType } from "./types/collections/Socials";
+import { getThemeCSS } from "./utils/theme";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -47,10 +48,13 @@ export default async function RootLayout({
 		}
 	});
 
+	const themeCSS = getThemeCSS(headerGlobal?.colorTheme);
+
 	return (
 		<html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${michroma.variable}`}>
 			<head>
 				<ThemeModeScript />
+				<style dangerouslySetInnerHTML={{ __html: themeCSS }} />
 			</head>
 			<body>
 				{
