@@ -1,5 +1,6 @@
 import React from 'react'
 import Section from '../components/motion/Section'
+import WarpWebCanvas from '../components/WarpWebCanvas'
 import { Landing2Type } from '../types/blocks/Landing';
 
 interface Landing2Props {
@@ -9,8 +10,11 @@ interface Landing2Props {
 
 const Landing2 = ({ data, className }: Landing2Props) => {
     return (
-        <Section id={data.blockType} className={`${className}`} aria-label={data.blockType}>
-            <div className="py-8 px-4 mx-auto max-w-7xl text-center lg:py-16 lg:px-12">
+        <Section id={data.blockType} className={`relative overflow-hidden ${className}`} aria-label={data.blockType}>
+            {/* Warping web mesh — distorts around the mouse pointer */}
+            <WarpWebCanvas />
+
+            <div className="relative z-10 py-8 px-4 mx-auto max-w-7xl text-center lg:py-16 lg:px-12">
                 {data.notification ? <a href={data.notification.url} className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700" role="alert">
                     <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span className="text-sm font-medium">{data.notification.label}</span>
                     <svg className="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>

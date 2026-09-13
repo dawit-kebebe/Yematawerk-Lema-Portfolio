@@ -65,10 +65,9 @@ export const HeroBlock2: Block = {
         },
         {
             name: 'notification', label: "Notification", type: 'group', fields: [
-                { name: 'label', type: 'text', required: true },
-                { name: 'url', type: 'text', required: true }
+                { name: 'label', type: 'text' },
+                { name: 'url', type: 'text' }
             ],
-            required: false
         },
         { name: 'title', type: 'text', required: true, },
         { name: 'description', type: 'textarea', required: true },
@@ -87,10 +86,9 @@ export const HeroBlock2: Block = {
             label: 'CTA Button 2',
             type: 'group',
             fields: [
-                { name: 'label', type: 'text', required: true },
-                { name: 'url', type: 'text', required: true }
+                { name: 'label', type: 'text' },
+                { name: 'url', type: 'text' }
             ],
-            required: false
         },
     ]
 }
