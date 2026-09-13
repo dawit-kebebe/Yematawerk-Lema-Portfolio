@@ -56,7 +56,7 @@ export const ServiceBlock: Block = {
                         { label: 'Monthly', value: 'month' },
                         { label: 'Yearly', value: 'year' }
                     ],
-                    required: true,
+                    required: false,
                 },
                 {
                     name: 'service_items',

@@ -15,7 +15,7 @@ export function ServiceCard({ data }: ServiceCardProps) {
                 <div className="flex items-baseline text-gray-900 dark:text-white">
                     <span className="text-5xl font-extrabold tracking-tight">{data.price}</span>
                     <span className="text-3xl font-semibold">{data.currency}</span>
-                    <span className="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">/{data.period}</span>
+                    {data.period && <span className="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">/{data.period}</span>}
                 </div>
                 <ul className="my-7 space-y-5">
                     {
