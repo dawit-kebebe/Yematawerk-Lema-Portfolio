@@ -24,7 +24,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         slug: 'blog-page'
     });
 
-    if (!blogPageGlobal?.enabled) {
+    if (!(blogPageGlobal as any)?.enabled) {
         notFound();
     }
 

@@ -18,7 +18,7 @@ const AboutPage = async () => {
 
         const aboutGlobal = await payload.findGlobal({ slug: 'about' })
 
-        if (!aboutGlobal?.enabled) {
+        if (!(aboutGlobal as any)?.enabled) {
             notFound();
         }
 

@@ -1,11 +1,11 @@
 import Landing from '@/app/(frontend)/blocks/Landing';
 import { CompaniesType, ImagePortfolioType, LandingType, TestimonialsType } from '@/app/(frontend)/types/blocks';
-import { ServiceTable, Services as ServiceType } from '@/payload-types';
+import { Services as ServiceType } from '@/payload-types';
 import About from '../blocks/About';
 import Companies from '../blocks/Companies';
 import ImagePortfolioHighlight from '../blocks/ImagePortfolioHighlight';
 import Services from '../blocks/Services';
-import ServicesTable from '../blocks/ServicesTable';
+import ServicesTable, { type ServiceTable } from '../blocks/ServicesTable';
 import Testimonials from '../blocks/Testimonials';
 import YamiTour from '../blocks/YamiTour';
 import { AboutType } from '../types/blocks/About';

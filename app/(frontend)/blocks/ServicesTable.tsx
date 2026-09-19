@@ -1,4 +1,3 @@
-import type { ServiceTable } from '@/payload-types';
 import {
     Table,
     TableBody,
@@ -9,6 +8,22 @@ import {
 } from 'flowbite-react';
 import Section from '../components/motion/Section';
 import SectionTitle from '../components/SectionTitle';
+
+// Local type mirrors the ServiceTableBlock Payload schema.
+// Once `pnpm generate:types` has been run, replace this with:
+// import type { ServiceTable } from '@/payload-types'
+export interface ServiceTable {
+    id?: string;
+    blockType: 'service-table';
+    blockSlug?: string | null;
+    section_title: string;
+    columns?: { id?: string | null; label: string }[] | null;
+    rows?: {
+        id?: string | null;
+        label: string;
+        values?: { id?: string | null; value?: string | null }[] | null;
+    }[] | null;
+}
 
 interface ServicesTableProps {
     data: ServiceTable;
@@ -34,7 +49,7 @@ export default function ServicesTable({ data, className }: ServicesTableProps) {
                             {/* Top-left corner cell — blank, acts as the row-label column header */}
                             <TableHeadCell />
                             {columns.map((col) => (
-                                <TableHeadCell key={col.id}>{col.label}</TableHeadCell>
+                                <TableHeadCell key={col.id ?? col.label}>{col.label}</TableHeadCell>
                             ))}
                         </TableRow>
                     </TableHead>
@@ -42,7 +57,7 @@ export default function ServicesTable({ data, className }: ServicesTableProps) {
                     <TableBody className="divide-y">
                         {rows.map((row) => (
                             <TableRow
-                                key={row.id}
+                                key={row.id ?? row.label}
                                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
                             >
                                 {/* Feature / service label — first cell acts as the row header */}
@@ -58,7 +73,7 @@ export default function ServicesTable({ data, className }: ServicesTableProps) {
                                             ? entry.value
                                             : '-';
                                     return (
-                                        <TableCell key={col.id}>{display}</TableCell>
+                                        <TableCell key={col.id ?? col.label}>{display}</TableCell>
                                     );
                                 })}
                             </TableRow>
