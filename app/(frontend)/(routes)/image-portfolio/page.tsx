@@ -1,6 +1,7 @@
 import config from '@/payload.config';
 import { Pagination } from '@frontend/components/Pagination';
 import { headers } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { getPayload } from 'payload';
 import { clampToString } from '@frontend/utils/clampIntToString';
 import { toPositiveInt } from '@frontend/utils/safePositiveInt';
@@ -13,6 +14,14 @@ interface ImagePortfolioPageProps {
 }
 
 const ImagePortfolioPage = async ({ searchParams }: ImagePortfolioPageProps) => {
+    const payload = await getPayload({ config });
+
+    const imagePortfolioPageGlobal = await payload.findGlobal({ slug: 'image-portfolio-page' } as any);
+
+    if (!imagePortfolioPageGlobal?.enabled) {
+        notFound();
+    }
+
     const resolvedSearchParams = await Promise.resolve(searchParams);
     const { page = 1, pageSize = 10 } = (resolvedSearchParams ?? {}) as { page?: string | number; pageSize?: string | number; };
     const pageStr = clampToString(page, "1");
@@ -24,8 +33,6 @@ const ImagePortfolioPage = async ({ searchParams }: ImagePortfolioPageProps) => 
     const host = headersList.get('host');
 
     const baseUrl = `${protocol}://${host}`;
-
-    const payload = await getPayload({ config });
 
     const imagePortfolioCollection = await payload.find({
         collection: 'image-portfolio',
@@ -43,7 +50,7 @@ const ImagePortfolioPage = async ({ searchParams }: ImagePortfolioPageProps) => 
 
     return (
         <div className='mt-4 w-full px-2 md:px-4'>
-            <SectionTitle title={'Image Portfolios'} />
+            <SectionTitle title={imagePortfolioPageGlobal?.title || 'Image Portfolios'} />
             <MasonrySection data={imagePortfolioCollection.docs} />
             <div className='py-8'>
                 <Pagination

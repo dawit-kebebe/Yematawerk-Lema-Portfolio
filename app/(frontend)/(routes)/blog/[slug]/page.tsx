@@ -5,7 +5,9 @@ import { getLexicalText } from '@frontend/utils/getLexicalText';
 import lexicalHeadingRenderer from "@frontend/utils/lexicalHeadingRenderer";
 import { readingTime } from '@frontend/utils/readtime';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { getPayload } from 'payload';
 import { BsStopwatch } from 'react-icons/bs';
 import NotFound from '@frontend/blocks/NotFound';
@@ -15,6 +17,75 @@ import BlogLatest from "./BlogLatest";
 
 interface BlogPageProps {
     params: { slug: string } | Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+    try {
+        const { slug } = await params;
+        if (!slug) return {};
+
+        const payload = await getPayload({ config });
+
+        // Respect the blog-page enabled flag for individual posts too
+        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' } as any);
+        if (!blogPageGlobal?.enabled) return {};
+
+        const blogCollection = await payload.find({
+            collection: 'blogs',
+            where: { slug: { equals: slug } },
+            limit: 1,
+        });
+
+        const blog = blogCollection?.docs?.[0];
+        if (!blog) return {};
+
+        const siteSettings = await payload.findGlobal({ slug: 'site-settings' } as any);
+        const siteTitle: string = (siteSettings as any)?.siteTitle ?? '';
+
+        const bannerUrl =
+            blog.banner &&
+            typeof blog.banner === 'object' &&
+            'url' in blog.banner
+                ? (blog.banner.url as string)
+                : undefined;
+
+        const title = siteTitle ? `${blog.title} | ${siteTitle}` : blog.title;
+        const description = blog.summary ?? undefined;
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title,
+                description,
+                type: 'article',
+                ...(bannerUrl && {
+                    images: [
+                        {
+                            url: bannerUrl,
+                            width:
+                                typeof blog.banner === 'object' && 'width' in blog.banner
+                                    ? (blog.banner.width as number) ?? 1200
+                                    : 1200,
+                            height:
+                                typeof blog.banner === 'object' && 'height' in blog.banner
+                                    ? (blog.banner.height as number) ?? 630
+                                    : 630,
+                            alt: blog.title,
+                        },
+                    ],
+                }),
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                ...(bannerUrl && { images: [bannerUrl] }),
+            },
+        };
+    } catch {
+        return {};
+    }
 }
 
 const BlogPage = async ({ params }: BlogPageProps) => {
@@ -28,6 +99,12 @@ const BlogPage = async ({ params }: BlogPageProps) => {
         }
 
         const payload = await getPayload({ config });
+
+        // If the blog section is disabled, treat individual posts as 404 too
+        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' } as any);
+        if (!blogPageGlobal?.enabled) {
+            notFound();
+        }
 
         const blogCollection = await payload.find({
             collection: 'blogs',

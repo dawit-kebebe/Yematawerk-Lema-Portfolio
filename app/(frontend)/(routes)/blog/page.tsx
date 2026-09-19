@@ -7,6 +7,7 @@ import { toPositiveInt } from "@frontend/utils/safePositiveInt";
 import { startOfDay, startOfMonth, startOfWeek } from "date-fns";
 import { headers } from "next/headers";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 import FilterForm from "./FilterForm";
 import GridListView from "./GridListView";
@@ -17,7 +18,17 @@ interface BlogPageProps {
 
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-    // // safely resolve searchParams (works whether it's a value or a Promise)
+    const payload = await getPayload({ config });
+
+    const blogPageGlobal = await payload.findGlobal({
+        slug: 'blog-page'
+    });
+
+    if (!blogPageGlobal?.enabled) {
+        notFound();
+    }
+
+    // safely resolve searchParams (works whether it's a value or a Promise)
     const resolvedSearchParams = await Promise.resolve(searchParams);
     const { page = 1, pageSize = 10, filter, author: authorFilter = "" } = (resolvedSearchParams ?? {}) as { page?: string | number; pageSize?: string | number; filter?: string, author?: string };
     const pageStr = clampToString(page, "1");
@@ -34,12 +45,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     const protocol = headersList.get("x-forwarded-proto") || "http";
     const host = headersList.get("host") || "localhost";
     const baseUrl = `${protocol}://${host}`;
-
-    const payload = await getPayload({ config });
-
-    const blogPageGlobal = await payload.findGlobal({
-        slug: 'blog-page'
-    })
 
     const blogsCollection = await payload.find({
         collection: 'blogs',

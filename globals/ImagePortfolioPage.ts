@@ -1,7 +1,8 @@
 import type { GlobalConfig } from 'payload';
 
-export const BlogPage: GlobalConfig = {
-    slug: 'blog-page',
+export const ImagePortfolioPage: GlobalConfig = {
+    slug: 'image-portfolio-page',
+    label: 'Image Portfolio Page',
     fields: [
         {
             name: 'enabled',
@@ -13,13 +14,14 @@ export const BlogPage: GlobalConfig = {
                 position: 'sidebar',
             },
         },
-        { name: 'title', type: 'text', required: true, },
-        { name: 'description', type: 'textarea', required: true },
         {
-            name: 'banner',
-            type: 'upload',
-            relationTo: 'media',
+            name: 'title',
+            type: 'text',
             required: true,
+            defaultValue: 'Image Portfolios',
+            admin: {
+                description: 'Heading displayed at the top of the image portfolio page.',
+            },
         },
-    ]
-}
+    ],
+};

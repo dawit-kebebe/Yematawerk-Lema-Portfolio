@@ -22,11 +22,50 @@ const michroma = Michroma({
 	weight: ['400'],
 });
 
-export const metadata: Metadata = {
-	title: "Yematawerk Lema",
-	description: "Personal portfolio of Yematawerk Lema. A Digital Marketer, Graphic Designer and Youtube Strategist.",
-	icons: '../favicon.ico'
-};
+export async function generateMetadata(): Promise<Metadata> {
+	try {
+		const payload = await getPayload({ config });
+		const siteSettings: any = await payload.findGlobal({ slug: 'site-settings' } as any);
+
+		const title: string = siteSettings?.siteTitle || 'My Site';
+		const description: string = siteSettings?.siteDescription || '';
+
+		const faviconUrl: string | undefined =
+			siteSettings?.favicon &&
+			typeof siteSettings.favicon === 'object' &&
+			'url' in siteSettings.favicon
+				? siteSettings.favicon.url
+				: undefined;
+
+		const ogImageUrl: string | undefined =
+			siteSettings?.ogImage &&
+			typeof siteSettings.ogImage === 'object' &&
+			'url' in siteSettings.ogImage
+				? siteSettings.ogImage.url
+				: undefined;
+
+		return {
+			title,
+			description,
+			...(faviconUrl && {
+				icons: { icon: faviconUrl },
+			}),
+			openGraph: {
+				title,
+				description,
+				...(ogImageUrl && {
+					images: [{ url: ogImageUrl }],
+				}),
+			},
+		};
+	} catch {
+		// Fall back to safe defaults if the CMS is unreachable during build
+		return {
+			title: 'My Site',
+			description: '',
+		};
+	}
+}
 
 export default async function RootLayout({
 	children,
@@ -53,7 +92,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${michroma.variable}`}>
 			<head>
-				<ThemeModeScript />
+				<ThemeModeScript defaultMode="dark" />
 				<style dangerouslySetInnerHTML={{ __html: themeCSS }} />
 			</head>
 			<body>

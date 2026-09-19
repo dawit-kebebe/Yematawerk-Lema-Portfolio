@@ -17,6 +17,8 @@ import { About } from './globals/About.ts'
 import { Header } from './globals/Header.ts'
 import { Landing } from './globals/Landing.ts'
 import { BlogPage } from './globals/Blog.ts'
+import { SiteSettings } from './globals/SiteSettings.ts'
+import { ImagePortfolioPage } from './globals/ImagePortfolioPage.ts'
 import { ImagePortfolio } from './collections/ImagePortfolio.ts'
 import { ContactUs } from './collections/ContactUs.ts'
 import { revalidatePath } from 'next/cache'
@@ -59,7 +61,7 @@ export default buildConfig({
 		})
 	},
 	collections: [Users, Media, Socials, Blogs, Authors, BlogCategories, ImagePortfolio, ContactUs],
-	globals: [Header, Landing, About, BlogPage],
+	globals: [Header, Landing, About, BlogPage, SiteSettings, ImagePortfolioPage],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {

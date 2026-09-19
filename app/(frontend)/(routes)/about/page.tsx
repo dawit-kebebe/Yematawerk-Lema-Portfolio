@@ -8,6 +8,7 @@ import { getPayload } from 'payload';
 import { BsStopwatch } from 'react-icons/bs';
 import { ContactUs } from '@frontend/blocks/ContactUs';
 import { getLexicalText } from '@frontend/utils/getLexicalText';
+import { notFound } from 'next/navigation';
 
 const AboutPage = async () => {
 
@@ -16,6 +17,11 @@ const AboutPage = async () => {
         const payload = await getPayload({ config });
 
         const aboutGlobal = await payload.findGlobal({ slug: 'about' })
+
+        if (!aboutGlobal?.enabled) {
+            notFound();
+        }
+
         const socialsCollection = await payload.find({ collection: 'socials' });
 
         socials = socialsCollection.docs
