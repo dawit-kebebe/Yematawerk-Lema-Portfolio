@@ -1,10 +1,11 @@
 import Landing from '@/app/(frontend)/blocks/Landing';
 import { CompaniesType, ImagePortfolioType, LandingType, TestimonialsType } from '@/app/(frontend)/types/blocks';
-import { Services as ServiceType } from '@/payload-types';
+import { ServiceTable, Services as ServiceType } from '@/payload-types';
 import About from '../blocks/About';
 import Companies from '../blocks/Companies';
 import ImagePortfolioHighlight from '../blocks/ImagePortfolioHighlight';
 import Services from '../blocks/Services';
+import ServicesTable from '../blocks/ServicesTable';
 import Testimonials from '../blocks/Testimonials';
 import YamiTour from '../blocks/YamiTour';
 import { AboutType } from '../types/blocks/About';
@@ -15,10 +16,10 @@ import { WefVisualsType } from '../types/blocks/WefVisuals';
 import WefVisuals from '../blocks/WefVisuals';
 
 interface RenderBlocksProps {
-    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, WefVisualsType, AboutType, ServiceType]
+    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, WefVisualsType, AboutType, ServiceType, ServiceTable]
 }
 
-type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServiceType;
+type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServiceType | ServiceTable;
 
 const RenderBlocks = ({ data }: RenderBlocksProps) => {
     return (
@@ -37,12 +38,14 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
                 const isWefVisuals = (b: BlockTypes): b is WefVisualsType => b.blockType === 'wefvisuals'
                 const isAbout = (b: BlockTypes): b is AboutType => b.blockType === 'about'
                 const isService = (b: BlockTypes): b is ServiceType => b.blockType === 'service'
+                const isServiceTable = (b: BlockTypes): b is ServiceTable => b.blockType === 'service-table'
 
                 if (isLanding(block)) return <Landing key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isLanding2(block)) return <Landing2 key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isCompanies(block)) return <Companies key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isTestimonials(block)) return <Testimonials key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isService(block)) return <Services key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
+                if (isServiceTable(block)) return <ServicesTable key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isImagePortfolios(block)) return <ImagePortfolioHighlight key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isYamiTour(block)) return <YamiTour key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isWefVisuals(block)) return <WefVisuals key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />

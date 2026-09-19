@@ -1,4 +1,5 @@
 import { ServiceBlock } from '@/blocks/ServiceBlock.ts';
+import { ServiceTableBlock } from '@/blocks/ServiceTableBlock.ts';
 import type { GlobalConfig } from 'payload';
 import { AboutBlock } from '../blocks/AboutBlock.ts';
 import { CompaniesBlock } from '../blocks/CompaniesBlock.ts';
@@ -32,7 +33,7 @@ export const Landing: GlobalConfig = {
         {
             name: 'sections',
             type: 'blocks',
-            blocks: [HeroBlock, HeroBlock2, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, WefVisualsBlock, ServiceBlock],
+            blocks: [HeroBlock, HeroBlock2, CompaniesBlock, TestimonialsBlock, ImagePortfolioBlock, YamiTourBlock, AboutBlock, WefVisualsBlock, ServiceBlock, ServiceTableBlock],
         }
     ]
 }
