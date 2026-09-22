@@ -8,25 +8,10 @@ import {
 } from 'flowbite-react';
 import Section from '../components/motion/Section';
 import SectionTitle from '../components/SectionTitle';
-
-// Local type mirrors the ServiceTableBlock Payload schema.
-// Once `pnpm generate:types` has been run, replace this with:
-// import type { ServiceTable } from '@/payload-types'
-export interface ServiceTable {
-    id?: string;
-    blockType: 'service-table';
-    blockSlug?: string | null;
-    section_title: string;
-    columns?: { id?: string | null; label: string }[] | null;
-    rows?: {
-        id?: string | null;
-        label: string;
-        values?: { id?: string | null; value?: string | null }[] | null;
-    }[] | null;
-}
+import { ServiceTableType } from '../types/blocks/ServiceTable';
 
 interface ServicesTableProps {
-    data: ServiceTable;
+    data: ServiceTableType;
     className?: string;
 }
 

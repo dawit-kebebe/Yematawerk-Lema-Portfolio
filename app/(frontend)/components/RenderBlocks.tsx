@@ -1,11 +1,10 @@
 import Landing from '@/app/(frontend)/blocks/Landing';
-import { CompaniesType, ImagePortfolioType, LandingType, TestimonialsType } from '@/app/(frontend)/types/blocks';
-import { Services as ServiceType } from '@/payload-types';
+import { CompaniesType, ImagePortfolioType, LandingType, ServicesType, ServiceTableType, TestimonialsType } from '@/app/(frontend)/types/blocks';
 import About from '../blocks/About';
 import Companies from '../blocks/Companies';
 import ImagePortfolioHighlight from '../blocks/ImagePortfolioHighlight';
 import Services from '../blocks/Services';
-import ServicesTable, { type ServiceTable } from '../blocks/ServicesTable';
+import ServicesTable from '../blocks/ServicesTable';
 import Testimonials from '../blocks/Testimonials';
 import YamiTour from '../blocks/YamiTour';
 import { AboutType } from '../types/blocks/About';
@@ -16,10 +15,10 @@ import { WefVisualsType } from '../types/blocks/WefVisuals';
 import WefVisuals from '../blocks/WefVisuals';
 
 interface RenderBlocksProps {
-    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, WefVisualsType, AboutType, ServiceType, ServiceTable]
+    data: [LandingType, Landing2Type, CompaniesType, TestimonialsType, ImagePortfolioType, YamiTourType, WefVisualsType, AboutType, ServicesType, ServiceTableType]
 }
 
-type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServiceType | ServiceTable;
+type BlockTypes = LandingType | Landing2Type | CompaniesType | TestimonialsType | ImagePortfolioType | YamiTourType | WefVisualsType | AboutType | ServicesType | ServiceTableType;
 
 const RenderBlocks = ({ data }: RenderBlocksProps) => {
     return (
@@ -37,8 +36,8 @@ const RenderBlocks = ({ data }: RenderBlocksProps) => {
                 const isYamiTour = (b: BlockTypes): b is YamiTourType => b.blockType === 'yami-tour'
                 const isWefVisuals = (b: BlockTypes): b is WefVisualsType => b.blockType === 'wefvisuals'
                 const isAbout = (b: BlockTypes): b is AboutType => b.blockType === 'about'
-                const isService = (b: BlockTypes): b is ServiceType => b.blockType === 'service'
-                const isServiceTable = (b: BlockTypes): b is ServiceTable => b.blockType === 'service-table'
+                const isService = (b: BlockTypes): b is ServicesType => b.blockType === 'service'
+                const isServiceTable = (b: BlockTypes): b is ServiceTableType => b.blockType === 'service-table'
 
                 if (isLanding(block)) return <Landing key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />
                 if (isLanding2(block)) return <Landing2 key={block.id} data={block} className={`${index % 2 !== 0 ? 'bg-gray-100 dark:bg-gray-700' : 'bg-transparent dark:bg-transparent'}`} />

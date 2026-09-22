@@ -1,10 +1,10 @@
-import type { Services } from "@/payload-types";
 import Section from "../components/motion/Section";
 import SectionTitle from "../components/SectionTitle";
 import { ServiceCard } from "../components/ServiceCard";
+import { ServicesType } from "../types/blocks/Services";
 
 interface ServicesProps {
-    data: Services;
+    data: ServicesType;
     className?: string;
 }
 

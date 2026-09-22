@@ -104,12 +104,16 @@ export interface Config {
     landing: Landing;
     about: About;
     'blog-page': BlogPage;
+    'image-portfolio-page': ImagePortfolioPage;
+    'site-settings': SiteSettings;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     landing: LandingSelect<false> | LandingSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
     'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
+    'image-portfolio-page': ImagePortfolioPageSelect<false> | ImagePortfolioPageSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -771,6 +775,7 @@ export interface About {
  */
 export interface BlogPage {
   id: string;
+  enabled?: boolean | null;
   title: string;
   description: string;
   banner: string | Media;
@@ -1009,6 +1014,54 @@ export interface BlogPageSelect<T extends boolean = true> {
  */
 export interface Auth {
   [k: string]: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image-portfolio-page".
+ */
+export interface ImagePortfolioPage {
+  id: string;
+  enabled?: boolean | null;
+  title: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSettings {
+  id: string;
+  siteTitle: string;
+  siteDescription: string;
+  favicon?: (string | null) | Media;
+  ogImage?: (string | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image-portfolio-page_select".
+ */
+export interface ImagePortfolioPageSelect<T extends boolean = true> {
+  enabled?: T;
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteDescription?: T;
+  favicon?: T;
+  ogImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 
 

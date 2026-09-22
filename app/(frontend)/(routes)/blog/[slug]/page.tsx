@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
         const payload = await getPayload({ config });
 
         // Respect the blog-page enabled flag for individual posts too
-        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' } as any);
+        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' });
         if (!blogPageGlobal?.enabled) return {};
 
         const blogCollection = await payload.find({
@@ -39,8 +39,8 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
         const blog = blogCollection?.docs?.[0];
         if (!blog) return {};
 
-        const siteSettings = await payload.findGlobal({ slug: 'site-settings' } as any);
-        const siteTitle: string = (siteSettings as any)?.siteTitle ?? '';
+        const siteSettings = await payload.findGlobal({ slug: 'site-settings' });
+        const siteTitle: string = siteSettings?.siteTitle ?? '';
 
         const bannerUrl =
             blog.banner &&
@@ -64,11 +64,11 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
                         {
                             url: bannerUrl,
                             width:
-                                typeof blog.banner === 'object' && 'width' in blog.banner
+                                typeof blog.banner === 'object' && blog.banner !== null && 'width' in blog.banner
                                     ? (blog.banner.width as number) ?? 1200
                                     : 1200,
                             height:
-                                typeof blog.banner === 'object' && 'height' in blog.banner
+                                typeof blog.banner === 'object' && blog.banner !== null && 'height' in blog.banner
                                     ? (blog.banner.height as number) ?? 630
                                     : 630,
                             alt: blog.title,
@@ -101,7 +101,7 @@ const BlogPage = async ({ params }: BlogPageProps) => {
         const payload = await getPayload({ config });
 
         // If the blog section is disabled, treat individual posts as 404 too
-        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' } as any);
+        const blogPageGlobal = await payload.findGlobal({ slug: 'blog-page' });
         if (!blogPageGlobal?.enabled) {
             notFound();
         }

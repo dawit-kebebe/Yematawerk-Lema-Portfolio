@@ -16,7 +16,7 @@ interface ImagePortfolioPageProps {
 const ImagePortfolioPage = async ({ searchParams }: ImagePortfolioPageProps) => {
     const payload = await getPayload({ config });
 
-    const imagePortfolioPageGlobal = await payload.findGlobal({ slug: 'image-portfolio-page' } as any);
+    const imagePortfolioPageGlobal = await payload.findGlobal({ slug: 'image-portfolio-page' });
 
     if (!imagePortfolioPageGlobal?.enabled) {
         notFound();
